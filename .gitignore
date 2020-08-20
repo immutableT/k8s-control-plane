@@ -1,0 +1,4 @@
+# Created by .ignore support plugin (hsz.mobi)
+kube-apiserver/kube-apiserver
+.idea
+k8s-control-plaine.iml

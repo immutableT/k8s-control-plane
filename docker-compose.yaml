@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  kube-apiserver:
+    image: kube-apiserver:latest
+    ports:
+      - "8443"
+    command: [
+               "/kube-apiserver",
+               "--secure-port=8433",
+               "--storage-backend=etcd3",
+               "--etcd-servers=http://etcd:2379"
+    ]
+    depends_on:
+      - etcd
+
+  etcd:
+    image: 'bitnami/etcd:latest'
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
